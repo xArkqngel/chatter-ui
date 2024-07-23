@@ -3,11 +3,12 @@ import React, { useState } from "react";
 
 interface AuthProps {
   submitLabel: string;
-  onSubmit: (credentials: {email:string, password:string}) => void;
+  onSubmit: (credentials: { email: string; password: string }) => void;
   children: React.ReactNode;
+  error?: string;
 }
 
-function Auth({submitLabel, onSubmit, children}: AuthProps) {
+function Auth({ submitLabel, onSubmit, children, error }: AuthProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -24,9 +25,26 @@ function Auth({submitLabel, onSubmit, children}: AuthProps) {
         justifyContent: "center",
       }}
     >
-      <TextField label="Email" variant="outlined" value={email} onChange={(e) => setEmail(e.target.value)}/>
-      <TextField label="Password" variant="outlined" type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-      <Button variant="contained" onClick={() => onSubmit({email,password})}>{submitLabel}</Button>
+      <TextField
+        label="Email"
+        variant="outlined"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        error={!!error}
+        helperText={error}
+      />
+      <TextField
+        label="Password"
+        variant="outlined"
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        error={!!error}
+        helperText={error}
+      />
+      <Button variant="contained" onClick={() => onSubmit({ email, password })}>
+        {submitLabel}
+      </Button>
       {children}
     </Stack>
   );
