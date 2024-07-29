@@ -5,6 +5,7 @@ import { useCreateUser } from "../../hooks/useCreateUser";
 import { useState } from "react";
 import { extractErrorMessage } from "../../utils/errors";
 import { useLogin } from "../../hooks/useLogin";
+import { UNKNOWN_ERROR_MESSAGE } from "../../constants/error";
 
 function SignUp() {
   const [createUser] = useCreateUser();
@@ -33,7 +34,7 @@ function SignUp() {
             setError(errorMessage);
             return;
           }
-          setError("Something went wrong");
+          setError(UNKNOWN_ERROR_MESSAGE);
         }
       }}
     >
