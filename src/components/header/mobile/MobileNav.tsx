@@ -7,7 +7,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Page } from "../../../interfaces/page.interface";
-import router from "../../Router";
+import router from "../../Routes";
 
 interface MobileNavProps {
     pages: Page[];

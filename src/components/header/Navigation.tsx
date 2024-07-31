@@ -1,6 +1,6 @@
 import { Box, Button } from "@mui/material";
 import { Page } from "../../interfaces/page.interface";
-import router from "../Router";
+import router from "../Routes";
 
 interface NavigationProps {
     pages: Page[];

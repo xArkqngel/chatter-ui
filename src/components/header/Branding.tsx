@@ -1,6 +1,6 @@
 import TryIcon from '@mui/icons-material/Try';
 import Typography from '@mui/material/Typography';
-import router from '../Router';
+import router from '../Routes';
 
 function Branding() {
   return (
