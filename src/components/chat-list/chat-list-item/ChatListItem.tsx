@@ -1,11 +1,15 @@
+import ListItem from "@mui/material/ListItem";
+import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
-import ListItem from "@mui/material/ListItem";
-import Divider from "@mui/material/Divider";
 
-function ChatListItem() {
+interface ChatListProps {
+  name?: string | null;
+}
+
+const ChatListItem = ({ name }: ChatListProps) => {
   return (
     <>
       <ListItem alignItems="flex-start">
@@ -13,7 +17,7 @@ function ChatListItem() {
           <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
         </ListItemAvatar>
         <ListItemText
-          primary="Brunch this weekend?"
+          primary={name}
           secondary={
             <>
               <Typography
@@ -32,6 +36,6 @@ function ChatListItem() {
       <Divider variant="inset" component="li" />
     </>
   );
-}
+};
 
 export default ChatListItem;

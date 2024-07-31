@@ -9,7 +9,7 @@ import { useState } from "react";
 import { useLogout } from "../../hooks/useLogout";
 import { onLogout } from "../../utils/logout";
 import { snackVar } from "../../constants/snack";
-import { UNKNOWN_ERROR_SNACK_MESSAGE } from "../../constants/error";
+import { UNKNOWN_ERROR_SNACK_MESSAGE } from "../../constants/errors";
 
 function Settings() {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);

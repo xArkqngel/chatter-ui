@@ -5,7 +5,7 @@ import { useCreateUser } from "../../hooks/useCreateUser";
 import { useState } from "react";
 import { extractErrorMessage } from "../../utils/errors";
 import { useLogin } from "../../hooks/useLogin";
-import { UNKNOWN_ERROR_MESSAGE } from "../../constants/error";
+import { UNKNOWN_ERROR_MESSAGE } from "../../constants/errors";
 
 function SignUp() {
   const [createUser] = useCreateUser();
