@@ -14,7 +14,8 @@ import { getMainDefinition } from "@apollo/client/utilities";
 const logoutLink = onError((error) => {
   if (
     error.graphQLErrors?.length &&
-    (error.graphQLErrors[0].extensions?.originalError as any)?.statusCode === 401
+    (error.graphQLErrors[0].extensions?.originalError as any)?.statusCode ===
+      401
   ) {
     if (!excludedRoutes.includes(window.location.pathname)) {
       onLogout();
@@ -49,8 +50,31 @@ const splitLink = split(
 );
 
 const client = new ApolloClient({
-  cache: new InMemoryCache(), // This is the cache that Apollo uses to store the data, it is used to avoid making the same request multiple times
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          chats: {
+            keyArgs: false,
+            merge,
+          },
+          messages: {
+            keyArgs: ["chatId"],
+            merge,
+          },
+        },
+      },
+    },
+  }), // This is the cache that Apollo uses to store the data, it is used to avoid making the same request multiple times
   link: logoutLink.concat(splitLink), // This makes the client to connect first to the backend, and then to the logoutLink
 });
+
+function merge(existing: any, incoming: any, { args }: any) {
+  const merged = existing ? existing.slice(0) : [];
+  for (let i = 0; i < incoming.length; ++i) {
+    merged[args.skip + i] = incoming[i];
+  }
+  return merged;
+}
 
 export default client;
