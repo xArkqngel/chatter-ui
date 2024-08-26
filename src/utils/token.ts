@@ -1,8 +1,7 @@
-export const setToken = (token: string) => localStorage.setItem('token', token);
+export const setToken = (token: string) => {};
 
 export const getToken = () => {
-    const token = localStorage.getItem('token');
-    return token ? `Bearer ${token}` : '';
-}
+  return "";
+};
 
 export const clearToken = () => localStorage.clear();
