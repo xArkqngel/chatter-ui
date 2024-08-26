@@ -6,6 +6,8 @@ import { onLogout } from "../utils/logout";
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { createClient } from "graphql-ws";
 import { getMainDefinition } from "@apollo/client/utilities";
+import { setContext } from "@apollo/client/link/context";
+import { getToken } from "../utils/token";
 
 /**
  * This link is used to intercept the errors that come from the server.
@@ -23,6 +25,15 @@ const logoutLink = onError((error) => {
   }
 });
 
+const authLink = setContext((_, { headers }) => {
+  return {
+    headers: {
+      ...headers,
+      authorization: getToken(),
+    },
+  };
+});
+
 const httpLink = new HttpLink({
   uri: `${API_URL}/graphql`, // This is the URL of the GraphQL server
 });
@@ -30,6 +41,9 @@ const httpLink = new HttpLink({
 const wsLink = new GraphQLWsLink(
   createClient({
     url: `${WS_URL}/graphql`, // This is the URL of the WebSocket server
+    connectionParams: {
+      token: getToken(),
+    }
   })
 );
 
@@ -66,7 +80,7 @@ const client = new ApolloClient({
       },
     },
   }), // This is the cache that Apollo uses to store the data, it is used to avoid making the same request multiple times
-  link: logoutLink.concat(splitLink), // This makes the client to connect first to the backend, and then to the logoutLink
+  link: logoutLink.concat(authLink).concat(splitLink), // This makes the client to connect first to the backend, and then to the logoutLink
 });
 
 function merge(existing: any, incoming: any, { args }: any) {
